@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # from https://github.com/Homebrew/homebrew/blob/master/Library/Formula/gnu-tar.rb
 require 'pp'
+require 'fileutils'
 STDOUT.sync = true
 
 currentDirectory = File.dirname(__FILE__)
@@ -22,9 +23,15 @@ Dir.chdir(gnuTarDirectory) do
     # https://github.com/Homebrew/homebrew/issues/44993
     # This is thought to be an el_capitan bug:
     # http://lists.gnu.org/archive/html/bug-tar/2015-10/msg00017.html
-   ENV["gl_cv_func_getcwd_abort_bug"] = "no"
+  ENV["gl_cv_func_getcwd_abort_bug"] = "no"
+  buildDirectory = File.join(gnuTarDirectory, "build")
+  if File.exists?(buildDirectory) == false
+    FileUtils.mkdir(buildDirectory)
+  end
 
-   system "./configure", "--program-prefix=g"
-   system "make"
+  Dir.chdir(buildDirectory)
+    system "../configure", "--program-prefix=g"
+    system "make"
+  end
 
 end
