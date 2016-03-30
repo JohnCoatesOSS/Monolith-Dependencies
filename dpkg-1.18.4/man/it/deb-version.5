@@ -1,0 +1,119 @@
+.\" dpkg manual page - deb-version(5)
+.\"
+.\" Copyright Â© 1996-1998 Ian Jackson and Christian Schwarz
+.\"   for parts of the text reused from the Debian Policy
+.\" Copyright Â© 2007 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright Â© 2011, 2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-version 5 "2 aprile 2013" "Progetto Debian" Debian
+.SH NOME
+deb\-version \- formato del numero di versione dei pacchetti Debian
+.
+.SH SINTASSI
+[\fIepoca\fP\fB:\fP]\fIversione\-originale\fP[\fB\-\fP\fIrevisione\-debian\fP]
+.SH DESCRIZIONE
+I numeri di versione usati per i pacchetti binari e sorgente di Debian sono
+formati da tre componenti che sono:
+.TP 
+\fIepoca\fP
+Questo è un singolo intero senza segno (generalmente piccolo). Può essere
+omesso, nel qual caso viene considerato equivalente a zero. Se viene omesso
+allora la \fIversione\-originale\fP non può contenere alcun carattere «:».
+.IP
+Viene fornito per permettere di tralasciare errori nei numeri di versione
+delle versioni più vecchie di un pacchetto e anche negli schemi di
+numerazione precedenti di un pacchetto.
+.TP 
+\fIversione\-originale\fP
+This is the main part of the version number.  It is usually the version
+number of the original (\(lqupstream\(rq)  package from which the \fI.deb\fP
+file has been made, if this is applicable.  Usually this will be in the same
+format as that specified by the upstream author(s); however, it may need to
+be reformatted to fit into the package management system's format and
+comparison scheme.
+.IP
+Il metodo di confronto del sistema di gestione dei pacchetti per ciò che
+riguarda \fIversione\-originale\fP è descritto in seguito. La porzione
+\fIversione\-originale\fP del numero di versione è obbligatoria.
+.IP
+The \fIupstream\-version\fP may contain only alphanumerics (\(lqA\-Za\-z0\-9\(rq)
+and the characters \fB.\fP \fB+\fP \fB\-\fP \fB:\fP \fB~\fP (full stop, plus, hyphen, colon,
+tilde) and should start with a digit.  If there is no \fIdebian\-revision\fP
+then hyphens are not allowed; if there is no \fIepoch\fP then colons are not
+allowed.
+.TP 
+\fIrevisione\-debian\fP
+Questa parte del numero di versione specifica la versione del pacchetto
+Debian basata sulla versione originale. Può contenere solo caratteri
+alfanumerici e i caratteri \fB+\fP  \fB.\fP \fB~\fP (più, punto, tilde) e viene
+confrontata nello stesso modo di \fIversione\-originale\fP.
+.IP
+It is optional; if it isn't present then the \fIupstream\-version\fP may not
+contain a hyphen.  This format represents the case where a piece of software
+was written specifically to be turned into a Debian package, and so there is
+only one \(lqdebianisation\(rq of it and therefore no revision indication is
+required.
+.IP
+It is conventional to restart the \fIdebian\-revision\fP at \(oq1\(cq each time
+time the \fIupstream\-version\fP is increased.
+.IP
+dpkg spezza il numero di versione all'ultimo trattino nella stringa (se ce
+n'è uno) per determinare \fIversione\-originale\fP e \fIrevisione\-debian\fP. In un
+confronto, l'assenza di una \fIrevisione\-debian\fP viene considerarata
+anteriore rispetto alla sua presenza (ma si deve notare che
+\fIrevisione\-debian\fP è la parte meno significativa del numero di versione).
+.SS "Algoritmo di ordinamento"
+Le parti \fIversione\-originale\fP e \fIrevisione\-debian\fP vengono confrontate dal
+sistema di gestione dei pacchetti usando lo stesso algoritmo:
+.PP
+Le stringhe vengono confrontate da sinistra a destra.
+.PP
+First the initial part of each string consisting entirely of non\-digit
+characters is determined.  These two parts (one of which may be empty) are
+compared lexically.  If a difference is found it is returned.  The lexical
+comparison is a comparison of ASCII values modified so that all the letters
+sort earlier than all the non\-letters and so that a tilde sorts before
+anything, even the end of a part.  For example, the following parts are in
+sorted order: \(oq~~\(cq, \(oq~~a\(cq, \(oq~\(cq, the empty part, \(oqa\(cq.
+.PP
+Poi viene determinata la parte iniziale del resto di ogni stringa che
+consiste interamente di caratteri che sono cifre. I valori numerici di
+queste due parti vengono confrontati e qualsiasi differenza trovata è
+restituita come risultato del confronto. Per questi scopi una stringa vuota
+(che può solo essere presente alla fine di una o di entrambe le stringhe di
+versione confrontate) viene considerata come zero.
+.PP
+Questi due passi (confronto e rimozione delle stringhe iniziali senza cifre
+e stringhe iniziali di cifre) vengono ripetuti fino a che non viene trovata
+una differenza o non sono esaurite entrambe le stringhe.
+.PP
+Note that the purpose of epochs is to allow us to leave behind mistakes in
+version numbering, and to cope with situations where the version numbering
+scheme changes.  It is \fBnot\fP intended to cope with version numbers
+containing strings of letters which the package management system cannot
+interpret (such as \(oqALPHA\(cq or \(oqpre\-\(cq), or with silly orderings.
+.SH NOTE
+Il carattere tilde e le sue particolari proprietà di ordinamento sono stati
+introdotti nella versione 1.10 di dpkg e alcune parti degli script di
+compilazione di dpkg hanno acquisito il supporto per essi solamente più
+tardi nella serie 1.10.x.
+.SH "VEDERE ANCHE"
+\fBdeb\-control\fP(5), \fBdeb\fP(5), \fBdpkg\fP(1)

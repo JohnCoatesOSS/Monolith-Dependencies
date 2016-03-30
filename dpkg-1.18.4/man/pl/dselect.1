@@ -1,0 +1,470 @@
+.\" dselect manual page - dselect(1)
+.\"
+.\" Copyright Â© 1995 Juho Vuori <javuori@cc.helsinki.fi>
+.\" Copyright Â© 2000 Josip Rodin
+.\" Copyright Â© 2001 Joost Kooij
+.\" Copyright Â© 2001 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright Â© 2010-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dselect 1 2014\-08\-11 "Projekt Debian" Debian
+.SH NAZWA
+dselect \- konsolowe narzêdzie zarz±dzania pakietami Debiana
+.
+.SH SK£ADNIA
+\fBdselect\fP [\fIoption\fP...] [\fIcommand\fP...]
+.
+.SH OPIS
+\fBdselect\fP
+jest jednym z podstawowych narzêdzi u¿ytkownika do zarz±dzania
+pakietami Debiana. Z g³ównego menu programu \fBdselect\fP administrator systemu mo¿e:
+ \- zaktualizowaæ listê dostêpnych pakietów,
+ \- wy¶wietliæ stan zainstalowanych i dostêpnych wersji pakietów,
+ \- wybieraæ pakiety i zarz±dzaæ zale¿no¶ciami,
+ \- zainstalowaæ nowe pakiety lub zaktualizowaæ pakiety do nowszych wersji.
+.PP
+\fBdselect\fP jest nak³adk± na polecenie \fBdpkg(1)\fP, niskopoziomowe narzêdzie
+zarz±dzania pakietami Debiana. Jego podstawow± zalet± jest menad¿er
+pe³noekranowego wyboru pakietów z mo¿liwo¶ci± znajdowania zale¿no¶ci miêdzy
+nimi i rozwi±zywania konfliktów. Program uruchomiony z prawami
+administratora daje mo¿liwo¶æ instalowania, aktualizowania oraz usuwania
+pakietów. Mo¿na skonfigurowaæ ró¿norodne metody dostêpu, za których pomoc±
+mo¿na ¶ci±gn±æ z repozytorium pakietów zarówno informacje o dostêpnych
+wersjach pakietów, jak i same pakiety do zainstalowania. W zale¿no¶ci od
+metody dostêpu repozytoria te mog± siê znajdowaæ na publicznych
+serwerach\-archiwach w Internecie, lokalnych serwerach z archiwami lub na
+CD\-ROM\-ach. Zalecan± metod± dostêpu jest metoda \fIapt\fP, dostarczana przez
+pakiet \fBapt\fP.
+.PP
+Normally \fBdselect\fP is invoked without parameters. An interactive menu is
+presented, offering the user a list of commands. If a command is given as
+argument, then that command is started immediately. Several command line
+parameters are still available to modify the running behaviour of \fBdselect\fP
+or show additional information about the program.
+.
+.SH OPCJE
+All options can be specified both on the command line and in the \fBdselect\fP
+configuration file \fI/etc/dpkg/dselect.cfg\fP or the files on the
+configuration directory \fI/etc/dpkg/dselect.cfg.d/\fP. Each line in the
+configuration file is either an option (exactly the same as the command line
+option but without leading hyphens) or a comment (if it starts with a
+\(oq\fB#\fP\(cq).
+.br
+.TP 
+\fB\-\-admindir\fP\fI katalog\fP
+Changes the directory where the dpkg \(oq\fIstatus\fP\(cq, \(oq\fIavailable\fP\(cq
+and similar files are located.  This defaults to \fI/var/lib/dpkg\fP and
+normally there shouldn't be any need to change it.
+.TP 
+\fB\-D\fP\fIfile\fP, \fB\-\-debug\fP \fIfile\fP
+W³±cza opcjê debuggera. Informacje debuggera s± wysy³ane do \fIpliku\fP.
+.TP 
+\fB\-\-expert\fP
+W³±cza tryb do¶wiadczonego u¿ytkownika i na przyk³ad nie wy¶wietla mêcz±cych
+informacji z pomoc±.
+.TP 
+\fB\-\-colour\fP|\fB\-\-color\fP \fIscreenpart\fP:[\fIforeground\fP],[\fIbackground\fP][:\fIattr\fP[\fI+attr\fP]...]
+Ustawia kolory ekranu. Dzia³a tylko pod warunkiem, ¿e terminal obs³uguje
+kolory. Ta opcja mo¿e zostaæ u¿yta wiele razy (i najlepiej jej u¿ywaæ w
+\fIdselect.cfg\fP). Ka¿de u¿ycie zmienia kolor (i opcjonalnie inne atrybuty)
+jakiej¶ czê¶ci ekranu. Czê¶ci ekranu s± nastêpuj±ce (od góry do do³u):
+.RS
+.TP 
+\fBtitle\fP
+Tytu³ ekranu.
+.TP 
+\fBlisthead\fP
+Linia nag³ówka nad list± pakietów.
+.TP 
+\fBlist\fP
+Przewijana lista pakietów (i równie¿ niektóre teksty pomocy).
+.TP 
+\fBlistsel\fP
+Pod¶wietlony element z listy.
+.TP 
+\fBpkgstate\fP
+W li¶cie pakietów \- tekst oznaczaj±cy obecny stan ka¿dego pakietu.
+.TP 
+\fBpkgstatesel\fP
+W li¶cie pakietów \- tekst oznaczaj±cy obecny stan pod¶wietlonego pakietu.
+.TP 
+\fBinfohead\fP
+Linia nag³ówka, w której wy¶wietlony jest stan obecnie zaznaczonego pakietu.
+.TP 
+\fBinfodesc\fP
+Krótki opis pakietu.
+.TP 
+\fBinfo\fP
+U¿ywane do wy¶wietlania informacji o pakiecie takich jak jego opis.
+.TP 
+\fBinfofoot\fP
+Ostatnia linia ekranu z wyborem pakietów.
+.TP 
+\fBquery\fP
+U¿ywane do wy¶wietlania linii zapytañ.
+.TP 
+\fBhelpscreen\fP
+Kolor ekranów pomocy.
+.RE
+.IP
+Po czê¶ci ekranu nastêpuje dwukropek i specyfikacja koloru. Mo¿na okre¶liæ
+kolor czcionek, kolor t³a albo oba te kolory, uniewa¿niaj±c domy¶lne
+warto¶ci kolorów. Nale¿y u¿ywaæ standardowych nazw kolorów z biblioteki
+curses.
+.IP
+Optionally, after the color specification is another colon, and an attribute
+specification. This is a list of one or more attributes, separated by plus
+(\(oq+\(cq) characters.  Available attributes include (not all of these will
+work on all terminals): \fBnormal\fP, \fBstandout\fP, \fBunderline\fP, \fBreverse\fP,
+\fBblink\fP, \fBbright\fP, \fBdim\fP, \fBbold\fP
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Wy¶wietla krótk± informacjê o pomocy i pomy¶lnie koñczy dzia³anie.
+.TP 
+\fB\-\-version\fP
+Wy¶wietla informacjê o wersji i pomy¶lnie koñczy dzia³anie.
+.
+.SH POLECENIA
+When \fBdselect\fP is started it can perform the following commands, either
+directly if it was specified on the command line or by prompting the user
+with a menu of available commands if running interactively:
+.SS "access (dostêp)"
+Wybiera metodê dostêpu u¿ywan± do znalezienia repozytorium pakietów.
+.sp
+Domy¶lnie istnieje kilka metod, takich jak \fIcdrom\fP, \fImulti_cd\fP, \fInfs\fP,
+\fImulti_nfs\fP, \fIharddisk\fP, \fImounted\fP, \fImulti_mount\fP, \fIfloppy\fP lub \fIftp\fP,
+ale inne pakiety mog± dostarczyæ dodatkowych metod, na przyk³ad metody
+\fIapt\fP dostarcza pakiet \fBapt\fP.
+.sp
+Zalecane jest u¿ywanie metody \fIapt\fP.
+.sp
+.SS "update (aktualizacja)"
+Aktualizuje bazê dostêpnych pakietów.
+.sp
+¦ci±ga listê dostêpnych wersji pakietów z repozytorium pakietów,
+skonfigurowanego za pomoc± wybranej metody dostêpu, i aktualizuje bazê
+pakietów programu dpkg. Listy pakietów s± zwyczajowo zawarte w repozytorium
+w plikach nazwanych \fIPackages\fP lub \fIPackages.gz\fP. Pliki te mog± zostaæ
+wygenerowane przez opiekunów repozytoriów za pomoc± programu
+\fBdpkg\-scanpackages\fP(1).
+.sp
+Details of the update command depend on the access method's implementation.
+Normally the process is straightforward and requires no user interaction.
+.sp
+.SS "select (wybór)"
+Wy¶wietla informacje o wyborze pakietów i zale¿no¶ciach oraz zarz±dza nimi.
+.sp
+Jest to g³ówna funkcja programu \fBdselect\fP. W ekranie wyboru pakietów
+u¿ytkownik mo¿e przegl±daæ listê dostêpnych i zainstalowanych
+pakietów. Je¿eli program dzia³a z uprawnieniami administratora, mo¿liwe jest
+interaktywne zmienianie stanu pakietów. \fBdselect\fP ¶ledzi wp³yw tych zmian
+na pakiety zale¿ne.
+.sp
+Je¶li zostanie wykryty konflikt lub niespe³niona zale¿no¶æ, wy¶wietlany jest
+ekran rozwi±zywania zale¿no¶ci pokazuj±cy listê pakietów, powoduj±cych
+konflikt lub niespe³nion± zale¿no¶æ i dla ka¿dego wy¶wietlonego pakietu \-
+przyczynê, dla której jest on wy¶wietlony. U¿ytkownik mo¿e zastosowaæ siê do
+sugestii zaproponowanych przez \fBdselect\fP, uniewa¿niæ je lub wycofaæ siê ze
+zmian, w³±czaj±c w to pakiety, które spowodowa³y niespe³nione zale¿no¶ci lub
+konflikty.
+.sp
+U¿ywanie ekrany do zarz±dzania interaktywnym wyborem pakietów jest
+szczegó³owo wyja¶nione poni¿ej.
+.sp
+.SS "install (instalacja)"
+Instaluje wybrane pakiety.
+.sp
+Za pomoc± skonfigurowanej metody dostêpu zostan± z odpowiednich repozytoriów
+pobrane pakiety do zainstalowania lub zaktualizowania za pomoc± programu
+\fBdpkg\fP. Zale¿nie od implementacji tej metody dostêpu, pakiety mog± zostaæ
+pobrane wcze¶niej \- przed instalacj± \- lub wtedy, gdy bêd±
+potrzebne. Niektóre metody dostêpu równie¿ usuwaj± pakiety zaznaczone do
+usuniêcia.
+.sp
+Je¿eli podczas instalacji wyst±pi b³±d, poleca siê uruchomienie akcji
+install jeszcze raz. W wiêkszo¶ci przypadków, problemy same znikn± lub
+zostan± rozwi±zane. Je¶li problem pozostaje lub przeprowadzona instalacja
+by³a nieprawid³owa, prosimy o zbadanie przyczyn problemu i okoliczno¶ci jego
+wyst±pienia i o wys³anie reportu o b³êdzie do systemu ¶ledzenia b³êdów
+Debiana. Instrukcje, jak to zrobiæ, mo¿na znale¼æ pod adresem
+https://bugs.debian.org/ albo w dokumentacji programów \fBbug\fP(1) lub
+\fBreportbug\fP(1), je¿eli s± zainstalowane.
+.sp
+Details of the install command depend on the access method's
+implementation.  The user's attention and input may be required during
+installation, configuration or removal of packages. This depends on the
+maintainer scripts in the package. Some packages make use of the
+\fBdebconf\fP(1)  library, allowing for more flexible or even automated
+installation setups.
+.sp
+.SS "config (konfigurowanie)"
+Konfiguruje wszystkie pakiety poprzednio zainstalowane, ale nie do koñca
+skonfigurowane.
+.sp
+.SS "remove (usuwanie)"
+Usuwa lub czy¶ci te zainstalowane pakiety, które s± zaznaczone do usuniêcia.
+.sp
+.SS "quit (wyj¶cie)"
+Quit \fBdselect\fP.
+.sp
+Wychodzi z programu z zerowym kodem b³êdu (pomy¶lnie).
+.sp
+.
+.SH "PACKAGE SELECTIONS MANAGEMENT"
+.sp
+.SS Wstêp
+.sp
+\fBdselect\fP odkrywa przed administratorem niektóre z³o¿ono¶ci wi±¿±ce siê z
+zarz±dzaniem du¿ym zbiorem pakietów z wieloma zale¿no¶ciami miêdzy nimi. Dla
+u¿ytkownika, który nie jest zaznajomiony z koncepcjami Debianowego systemu
+zarz±dzania pakietami, mo¿e to byæ bardzo przyt³aczaj±ce. Chocia¿ celem
+programu \fBdselect\fP jest u³atwienie zarz±dzania i administrowania pakietami,
+jest on tylko instrumentem s³u¿±cym do tego i nie mo¿e w wystarczaj±cym
+stopniu zast±piæ umiejêtno¶ci i wiedzy administratora. U¿ytkownik powinien
+byæ zaznajomiony z koncepcjami le¿±cymi u podstaw systemu pakietów
+Debiana. W razie jakichkolwiek w±tpliwo¶ci, nale¿y je sprawdziæ w
+podrêczniku \fBdpkg\fP(1) oraz w podrêczniku "Zasady polityki Debiana" zawartym
+w pakiecie \fBdebian\-policy\fP.
+.sp
+Unless \fBdselect\fP is run in expert or immediate mode, a help screen is first
+displayed when choosing this command from the menu. The user is \fIstrongly\fP
+advised to study all of the information presented in the online help
+screens, when one pops up.  The online help screens can at any time be
+invoked with the \(oq\fB?\fP\(cq key.
+.sp
+.SS "Uk³ad ekranu"
+.sp
+Ekran wyboru pakietów domy¶lnie podzielony jest na górn± i doln± po³owê. W
+górnej po³owie wy¶wietlona jest lista pakietów. Za pomoc± paska wyboru mo¿na
+wybraæ pojedynczy pakiet lub grupê pakietów, przez zaznaczenie nag³ówka
+grupy pakietów. W dolnej po³owie ekranu pokazane s± szczegó³owe informacje
+na temat pakietu obecnie wybranego w górnej po³owie ekranu. Typ tych
+informacji mo¿e byæ ró¿ny.
+.sp
+Pressing the \(oq\fBI\fP\(cq key toggles a full\-screen display of the packages
+list, an enlarged view of the package details, or the equally split screen.
+.sp
+.SS "Widok szczegó³owych informacji o pakiecie"
+.sp
+The package details view by default shows the extended package description
+for the package that is currently selected in the packages status list.
+The type of detail can be toggled by pressing the \(oq\fBi\fP\(cq key.
+This alternates between:
+ \- the extended description
+ \- the control information for the installed version
+ \- the control information for the available version
+.sp
+Ekran rozwi±zywania zale¿no¶ci daje tak¿e mo¿liwo¶æ podejrzenia okre¶lonych
+niespe³nionych zale¿no¶ci b±d¼ konfliktów zwi±zanych z pakietem, tj. tych
+zale¿no¶ci, które spowodowa³y wylistowanie tego pakietu.
+.sp
+.SS "Lista stanów pakietów"
+.sp
+W g³ównym ekranie wyboru pakietów wy¶wietlona jest lista wszystkich pakietów
+znanych systemowi zarz±dzania pakietami Debiana. S± to zarówno pakiety
+zainstalowane w systemie, jak i pakiety zawarte w bazie dostêpnych pakietów.
+.sp
+For every package, the list shows the package's status, priority, section,
+installed and available architecture, installed and available versions, the
+package name and its short description, all in one line.  By pressing the
+\(oq\fBA\fP\(cq key, the display of the installed and available architecture
+can be toggled between on an off.  By pressing the \(oq\fBV\fP\(cq key, the
+display of the installed and available version can be toggled between on an
+off.  By pressing the \(oq\fBv\fP\(cq key, the package status display is
+toggled between verbose and shorthand.  Shorthand display is the default.
+.sp
+Na skrócony opis stanu pakietu sk³adaj± siê cztery czê¶ci: flaga b³êdu,
+która normalnie powinna byæ czysta, obecny stan zainstalowania pakietu,
+poprzedni stan wyboru pakietu oraz obecny stan wyboru pakietu. Dwie pierwsze
+czê¶ci s± zwi±zane z obecnym stanem pakietu, kolejne dwie \- zwi±zane z
+wyborami dokonanymi przez u¿ytkownika.
+.sp
+Oznaczenia u¿ywane w skróconym opisie stanu pakietu s± nastêpuj±ce:
+ Flaga b³êdu:
+  \fIpusty\fP   bez b³êdu;
+  \fBR\fP       powa¿ny b³±d, pakiet wymaga reinstalacji;
+ Stan instalacji:
+  \fIpusty\fP   nie zainstalowany;
+  \fB*\fP       w pe³ni zainstalowany i skonfigurowany;
+  \fB\-\fP       nie zainstalowany, ale mog³y pozostaæ pliki konfiguracyjne;
+  \fBU\fP       rozpakowany, ale jeszcze nie skonfigurowany;
+  \fBC\fP       w po³owie skonfigurowany (wyst±pi³ b³±d);
+  \fBI\fP       w po³owie zainstalowany (wyst±pi³ b³±d).
+ Obecne i ¿±dane wybory:
+  \fB*\fP       zaznaczony do zainstalowania lub zaktualizowania;
+  \fB\-\fP       zaznaczony do usuniêcia z pozostawieniem plików konfig.;
+  \fB=\fP       wstrzymany: pakiet nie bêdzie przetwarzany;
+  \fB_\fP       zaznaczony do usuniêcia i wyczyszczenia plików konfig.;
+  \fBn\fP       pakiet jest nowy i jeszcze nie by³ znaczony.
+.sp
+.SS "Przesuwanie kursora i ekranu"
+.sp
+Ekran wyboru pakietów oraz ekran rozwi±zywania zale¿no¶ci mo¿na przesuwaæ
+u¿ywaj±c poleceñ przypisanych do nastêpuj±cych klawiszy:
+.br
+  \fBp, Up, k\fP           przesuniêcie paska kursora w górê
+  \fBn, Down, j\fP         przesuniêcie paska kursora w dó³
+  \fBP, Pgup, Backspace\fP przesuniêcie listy 1 stronê w górê
+  \fBN, Pgdn, Space\fP     przesuniêcie listy 1 stronê w dó³
+  \fB^p\fP                 przesuniêcie listy 1 liniê w górê
+  \fB^n\fP                 przesuniêcie listy 1 liniê w dó³
+  \fBt, Home\fP            skok na pocz±tek listy
+  \fBe, End\fP             skok na koniec listy
+  \fBu\fP                  przesuniêcie informacji 1 stronê w górê
+  \fBd\fP                  przesuniêcie informacji 1 stronê w dó³
+  \fB^u\fP                 przesuniêcie informacji 1 liniê w górê
+  \fB^d\fP                 przesuniêcie informacji 1 liniê w dó³
+  \fBB, Left\-arrow\fP      przesuniêcie ekranu o 1/3 ekranu w lewo
+  \fBF, Right\-arrow\fP     przesuniêcie ekranu o 1/3 ekranu w prawo
+  \fB^b\fP                 przesuniêcie ekranu o 1 znak w lewo
+  \fB^f\fP                 przesuniêcie ekranu o 1 znak w prawo
+.sp
+.SS "Wyszukiwanie i sortowanie"
+.sp
+The list of packages can be searched by package name. This is done by
+pressing \(oq\fB/\fP\(cq, and typing a simple search string. The string is
+interpreted as a \fBregex\fP(7)  regular expression.  If you add \(oq\fB/d\fP\(cq
+to the search expression, dselect will also search in descriptions.  If you
+add \(oq\fB/i\fP\(cq the search will be case insensitive.  You may combine
+these two suffixes like this: \(oq\fB/id\fP\(cq.  Repeated searching is
+accomplished by repeatedly pressing the \(oq\fBn\fP\(cq or \(oq\fB\e\fP\(cq keys,
+until the wanted package is found.  If the search reaches the bottom of the
+list, it wraps to the top and continues searching from there.
+.sp
+The list sort order can be varied by pressing
+the \(oq\fBo\fP\(cq and \(oq\fBO\fP\(cq keys repeatedly.
+The following nine sort orderings can be selected:
+ alphabet          available           status
+ priority+section  available+priority  status+priority
+ section+priority  available+section   status+section
+.br
+Tam gdzie nie jest to powy¿ej wyra¼nie powiedziane, porz±dek alfabetyczny
+jest u¿ywany jako klucz podwyszukiwania.
+.sp
+.SS "Zmienianie wyboru pakietów"
+.sp
+¯±dany stan wyboru indywidualnych pakietów mo¿na zmieniæ
+za pomoc± nastêpuj±cych poleceñ:
+  \fB+, Insert\fP    instalacja lub aktualizacja
+  \fB=, H\fP         wstrzymanie pakietu w obecnym stanie i wersji
+  \fB:, G\fP         zaprzestanie wstrzymania: aktualizacja pakietu lub pozostawienie go jako niezainstalowanego
+  \fB\-, Delete\fP    usuniêcie, ale z zostawieniem plików konfiguracyjnych
+  \fB_\fP            usuniêcie z wyczyszczeniem plików konfiguracyjnych
+.sp
+Kiedy w wyniku zmian powstaj± jedna lub wiêcej niespe³nionych zale¿no¶ci
+albo konflikty, \fBdselect\fP wy¶wietla u¿ytkownikowi ekran rozwi±zywania
+zale¿no¶ci. Bêdzie on obja¶niony nieco pó¼niej.
+.sp
+Powy¿sze polecenia mo¿na zastosowaæ równie¿ do grup pakietów \- przez
+ustawienie paska kursora na nag³ówku grupy. Sposób grupowania pakietów
+zale¿y od ustawieñ sortowania listy pakietów.
+.sp
+Nale¿y zachowaæ nale¿yt± ostro¿no¶æ, zmieniaj±c du¿e grupy pakietów,
+poniewa¿ mo¿e to oznaczaæ natychmiastowe utworzenie du¿ej liczby
+niespe³nionych zale¿no¶ci i konfliktów, bardzo trudnej do rozwi±zania. W
+praktyce tylko operacje wstrzymania i zaprzestania wstrzymania s± u¿yteczne
+w odniesieniu do grup pakietów.
+.sp
+.SS "Rozwi±zywanie zale¿no¶ci i konfliktów"
+.sp
+Kiedy w wyniku zmian powstaj± jedna lub wiêcej niespe³nionych zale¿no¶ci
+albo konflikty, \fBdselect\fP wy¶wietla u¿ytkownikowi ekran rozwi±zywania
+zale¿no¶ci. Najpierw, jednak¿e, wy¶wietlany jest ekran pomocy.
+.sp
+W górnej po³owie ekranu rozwi±zywania zale¿no¶ci wy¶wietlone s± wszystkie te
+pakiety, które w wyniku zastosowania ¿±danych przez u¿ytkownika zmian
+mia³yby niespe³nione zale¿no¶ci albo konflikty, oraz wszystkie te pakiety,
+których instalacja spe³ni³aby które¶ z tych zale¿no¶ci, lub których
+usuniêcie rozwi±za³oby konflikty. W dolnej po³owie wy¶wietlone s± te
+zale¿no¶ci lub konflikty, które spowodowa³y, ¿e obecnie wybrany pakiet
+zosta³ umieszczony na li¶cie.
+.sp
+Wy¶wietlaj±c pocz±tkow± podlistê pakietów, \fBdselect\fP móg³ ustawiæ ju¿ pewne
+¿±dane wybory niektórych spo¶ród wylistowanych pakietów, w celu rozwi±zania
+zale¿no¶ci lub konfliktów, które by³y przyczyn± wy¶wietlenia ekranu
+rozwi±zywania zale¿no¶ci. Zazwyczaj najlepszym wyj¶ciem jest zastosowanie
+siê do sugestii zrobionych przez \fBdselect\fP.
+.sp
+The listed packages' selection state may be reverted to the original
+settings, as they were before the unresolved depends or conflicts were
+created, by pressing the \(oq\fBR\fP\(cq key.  By pressing the \(oq\fBD\fP\(cq
+key, the automatic suggestions are reset, but the change that caused the
+dependency resolution screen to be prompted is kept as requested.  Finally,
+by pressing \(oq\fBU\fP\(cq, the selections are again set to the automatic
+suggestion values.
+.sp
+.SS "Ustanawianie ¿±danych wyborów pakietów"
+.sp
+Po naci¶niêciu klawisza \fBenter\fP, obecnie wy¶wietlony zbiór wyborów zostaje
+zaakceptowany. Je¿eli \fBdselect\fP nie wykryje niespe³nionych zale¿no¶ci
+powsta³ych w wyniku zaakceptowania ¿±danych wyborów, to zostan± one
+ustawione. Jednak¿e, je¿eli bêd± nierozwi±zane zale¿no¶ci, to \fBdselect\fP
+ponownie wy¶wietli ekran rozwi±zywania zale¿no¶ci.
+.sp
+To alter a set of selections that creates unresolved depends or conflicts
+and forcing \fBdselect\fP to accept it, press the \(oq\fBQ\fP\(cq key. This sets
+the selections as specified by the user, unconditionally. Generally, don't
+do this unless you've read the fine print.
+.sp
+The opposite effect, to back out any selections change requests and go back
+to the previous list of selections, is attained by pressing the \(oq\fBX\fP\(cq
+or \fBescape\fP keys. By repeatedly pressing these keys, any possibly
+detrimental changes to the requested package selections can be backed out
+completely to the last established settings.
+.sp
+If you mistakenly establish some settings and wish to revert all the
+selections to what is currently installed on the system, press the
+\(oq\fBC\fP\(cq key.  This is somewhat similar to using the unhold command on
+all packages, but provides a more obvious panic button in cases where the
+user pressed \fBenter\fP by accident.
+.sp
+.
+.SH ¦RODOWISKO
+.TP 
+\fBHOME\fP
+Je¶li ustawiona, \fBdselect\fP bêdzie jej u¿ywa³ jako katalogu z którego
+odczyta plik konfiguracyjny u¿ytkownika.
+.
+.SH B£ÊDY
+Dla nowych u¿ytkowników, \fBdselect\fP mo¿e byæ trudny do opanowania. Podobno
+zmusza do p³aczu nawet wytrawnych wspó³twórców j±dra Linuksa.
+.sp
+Dokumentacja jest wybrakowana.
+.sp
+Brak opcji "pomoc" w g³ównym menu.
+.sp
+Nie mo¿na ograniczyæ listy dostêpnych pakietów.
+.sp
+Wbudowane metody dostêpu nie s± zgodne z obecnymi standardami
+jako¶ci. Nale¿y u¿ywaæ metody apt, która nie tylko nie jest zepsuta, ale
+tak¿e jest o wiele bardziej elastyczna ni¿ metody wbudowane.
+.
+.SH "ZOBACZ TAK¯E"
+\fBdpkg\fP(1), \fBapt\-get\fP(8), \fBsources.list\fP(5), \fBdeb\fP(5).
+.SH T£UMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feñski <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Micha³ Ku³ach <michal.kulach@gmail.com>, 2012

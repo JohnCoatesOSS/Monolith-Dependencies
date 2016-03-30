@@ -1,0 +1,60 @@
+.\" dpkg manual page - deb-origin(5)
+.\"
+.\" Copyright © 2011 Matt Kraai <kraai@ftbfs.org>
+.\" Copyright © 2011 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-origin 5 "10 novembre 2011" "Progetto Debian" Debian
+.SH NOME
+deb\-origin \- file con informazioni specifiche del produttore
+.SH SINTASSI
+\fB/etc/dpkg/origins/\fP\fInomefile\fP
+.SH DESCRIZIONE
+The files in \fB/etc/dpkg/origins\fP can provide information about various
+vendors who are providing Debian packages. They contain a number of fields,
+or comments when the line starts with \(oq\fB#\fP\(cq.  Each field begins with
+a tag, such as \fBVendor\fP or \fBParent\fP, followed by a colon and the body of
+the field. Fields are delimited only by field tags. In other words, field
+text may be multiple lines in length, but the tools will join lines when
+processing the body of the field.
+.SH FIELDS
+.TP 
+\fBVendor:\fP \fIvendor\-name\fP (required)
+Il valore di questo campo indica il nome del produttore.
+.TP 
+\fBVendor\-URL:\fP\fI url\-produttore\fP
+Il valore di questo campo indica l'URL del produttore.
+.TP 
+\fBBugs:\fP\fI url\-bug\fP
+Il valore di questo campo determina il tipo e l'indirizzo del sistema di
+tracciamento dei bug usato da questo produttore. Pu� essere un URL mailto o
+un URL debbugs (as esempio, debbugs://bugs.debian.org/).
+.TP 
+\fBParent:\fP\fI nome\-produttore\fP
+Il valore di questo campo determina il nome del produttore da cui discende
+questo produttore.
+.SH ESEMPIO
+.nf
+Vendor: Debian
+Vendor\-URL: https://www.debian.org/
+Bugs: debbugs://bugs.debian.org
+.fi
+.SH "VEDERE ANCHE"
+\fBdpkg\-vendor\fP(1)

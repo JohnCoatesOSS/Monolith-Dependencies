@@ -1,0 +1,110 @@
+.\" dpkg manual page - dpkg-scanpackages(1)
+.\"
+.\" Copyright 息 1996 Michael Shields <shields@crosslink.net>
+.\" Copyright 息 2006 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright 息 2007, 2009, 2011-2014 Guillem Jover <guillem@debian.org>
+.\" Copyright 息 2009 Rapha谷l Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-scanpackages 1 2012\-05\-07 "Debian Project" "dpkg ユーティリティ"
+.SH 名前
+dpkg\-scanpackages \- Packages インデックスファイルの作成
+.
+.SH 書式
+\fBdpkg\-scanpackages\fP [\fIoption\fP...] \fIbinary\-dir\fP [\fIoverride\-file\fP
+[\fIpath\-prefix\fP]] \fB>\fP \fIPackages\fP
+.
+.SH 説明
+\fBdpkg\-scanpackages\fP は、Debian バイナリパッケージのツリーから、Packages ファイルを生成する。Packages
+ファイルは、インストール可能なパッケージをユーザに提示するために、\fBapt\fP(8) や \fBdselect\fP(1)
+などによって用いられる。こうしたPackages ファイルは Debian アーカイブサイトや CD\-ROM
+などで使われているものと同じものである。多数のマシンにインストールを行うローカルなパッケージのディレクトリを作成した上で、自分で
+\fBdpkg\-scanpackages\fP を使うこともできる。
+.PP
+\fBNote:\fP If you want to access the generated Packages file with \fBapt\fP you
+will probably need to compress the file with \fBxz\fP(1)  (generating a
+Packages.xz file), \fBbzip2\fP(1)  (generating a Packages.bz2 file) or
+\fBgzip\fP(1)  (generating a Packages.gz file). apt ignores uncompressed
+Packages files except on local access (i.e.  \fBfile://\fP sources).
+.PP
+\fIbinary\-dir\fP は処理するバイナリパッケージツリーの名前である (例えば \fBcontrib/binary\-i386\fP など)。Debian
+アーカイブのルートに対する相対パスにしておくことが推奨される。これは、新規 Packages ファイルに含まれている各 Filename
+フィールドはこの文字列で始まるからである。
+.PP
+\fIoverride\-file\fP is the name of a file to read which contains information
+about how the package fits into the distribution (the file can be compressed
+since dpkg 1.15.5); see \fBdeb\-override\fP(5).
+.PP
+\fIpath\-prefix\fP は Filename フィールドにおいて、パスの前に追加できるオプションの文字列である。
+.PP
+パッケージに複数のバージョンがある場合、最新のものだけが出力される。同一のバージョンでアーキテクチャだけが異なる場合は、最初のものだけが使用される。
+.
+.SH オプション
+.TP 
+\fB\-t\fP, \fB\-\-type\fP \fItype\fP
+*.deb の代わりに *.\fItype\fP パッケージを検索の対象とする。
+.TP 
+\fB\-e\fP, \fB\-\-extra\-override\fP \fIfile\fP
+Scan \fIfile\fP to find supplementary overrides (the file can be compressed
+since dpkg 1.15.5).  See \fBdeb\-extra\-override\fP(5)  for more information on
+its format.
+.TP 
+\fB\-a\fP, \fB\-\-arch\fP \fIarch\fP
+すべての deb ファイルを検索する代わりに、\fI*_all.deb\fP および \fI*_arch.deb\fP といったパターンを検索する。
+.TP 
+\fB\-h\fP, \fB\-\-hash\fP \fIhash\-list\fP
+Only generate file hashes for the comma\-specified list specified (since dpkg
+1.17.14).  The default is to generate all currently supported hashes.
+Supported values: \fBmd5\fP, \fBsha1\fP, \fBsha256\fP.
+.TP 
+\fB\-m\fP, \fB\-\-multiversion\fP
+みつかったパッケージすべてを出力する。
+.TP 
+\fB\-M\fP, \fB\-\-medium\fP \fIid\-string\fP
+Add an \fBX\-Medium\fP field containing the value \fIid\-string\fP (since dpkg
+1.15.5).  This field is required if you want to generate \fBPackages.cd\fP
+files for use by the multicd access method of dselect.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+利用方法を表示して終了する。
+.TP 
+\fB\-\-version\fP
+バージョン情報を表示して終了する。
+.
+.SH 診断メッセージ
+\fBdpkg\-scanpackages\fP のエラーメッセージは通常自明である。また、不適切なディレクトリにある、重複している、control ファイルに
+Filename フィールドがある、override ファイルに存在しない、無効なメンテナの置換があるといったパッケージに対する警告も行う。
+.
+.SH 関連項目
+.ad l
+.nh
+\fBdpkg\fP(1), \fBdselect\fP(1), \fBdeb\-override\fP(5), \fBdeb\-extra\-override\fP(5),
+\fBdpkg\-scansources\fP(1).
+.SH 翻訳者
+高橋 基信 <monyo@monyo.com>.
+喜瀬 浩 <kise@fuyuneko.jp>.
+関戸 幸一 <sekido@mbox.kyoto-inet.or.jp>.
+鍋谷 栄展 <nabe@debian.or.jp>.
+倉澤 望 <nabetaro@debian.or.jp>.
+石川 睦 <ishikawa@linux.or.jp>.
+鵜飼 文敏 <ukai@debian.or.jp>.
+中野 武雄 <nakano@apm.seikei.ac.jp>.
+.SH 翻訳校正
+Debian JP Documentation ML <debian-doc@debian.or.jp>.

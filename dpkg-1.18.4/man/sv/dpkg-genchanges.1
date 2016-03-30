@@ -1,0 +1,152 @@
+.\" dpkg manual page - dpkg-genchanges(1)
+.\"
+.\" Copyright Â© 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright Â© 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright Â© 2006-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright Â© 2008-2010 RaphaÃ«l Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-genchanges 1 2014\-09\-24 Debianprojektet dpkg\-verktygen
+.SH NAMN
+dpkg\-genchanges \- skapa .changes\-filer för Debian
+.
+.SH SYNOPS
+\fBdpkg\-genchanges\fP [\fIflagga\fP...]
+.br
+.
+.SH BESKRIVNING
+\fBdpkg\-genchanges\fP läser information från ett uppackat och byggt
+Debiankällkodsträd och från de filer det har genererat, och genererar en
+styrfil för insändning till Debian (\fB.changes\fP\-fil).
+.
+.SH FLAGGOR
+.TP 
+\fB\-g\fP
+Specifies that only source and architecture independent packages should be
+uploaded, thus no architecture specific packages will be included (since
+dpkg 1.17.11).
+.TP 
+\fB\-G\fP
+Specifies that only source and architecture specific packages should be
+uploaded, thus no architecture independent packages will be included (since
+dpkg 1.17.11).
+.TP 
+\fB\-b\fP, \fB\-B\fP, \fB\-A\fP
+Specifies that a binary\-only build is taking place, thus no source files are
+to be included.  There's no distinction between \fB\-b\fP, \fB\-B\fP and \fB\-A\fP, the
+produced \fB.changes\fP file will include whatever files were created by the
+\fBbinary\-*\fP target(s) of the package being built.
+.TP 
+\fB\-S\fP
+Specifies that only the source should be uploaded, thus no binary packages
+will be included.
+.PP
+Flaggorna \fB\-s\fP\fIx\fP styr huruvida det ursprungliga källkodsarkivet skall
+inkluderas i insändningen om källkod genereras (dvs. \fB\-b\fP eller \fB\-B\fP inte
+har använts).
+.TP 
+\fB\-si\fP
+Som standard, eller om den anges, kommer originalkällkoden endast att
+inkluderas om uppströmsversionsnumret (versionsnumret utan epok och utan
+Debianuppdateringsnummer) skiljer sig från uppströmsversionsnumret i
+föregående ändringsloggspost.
+.TP 
+\fB\-sa\fP
+Bifogar alltid originalkällkoden.
+.TP 
+\fB\-sd\fP
+Bifogar inte originalkällkoden, utan enbart differensfilen.
+.fi
+.TP 
+\fB\-v\fP\fIversion\fP
+Använder information från ändringsloggen för alla versioner som är strikt
+senare än \fIversion\fP.
+.TP 
+\fB\-C\fP\fIändringsbeskrivning\fP
+Läs beskrivningen av ändringarna från filen \fIändringsbeskrivning\fP istället
+för att använda information från källkodsträdets changelog\-fil.
+.TP 
+\fB\-m\fP\fIpaketansvarige\-adress\fP
+Använd \fIpaketansvarige\-adress\fP som namn och e\-postadress till ansvarig för
+detta paket, istället för att använda informationen från källkodsträdets
+control\-fil.
+.TP 
+\fB\-e\fP\fIpaketansvarige\-adress\fP
+Använd \fIpaketansvarige\-adress\fP som namn och e\-postadress till ansvarig för
+denna insändning, istället för att använda informationen från
+källkodsträdets changelog\-fil.
+.TP 
+\fB\-V\fP\fInamn\fP\fB=\fP\fIvärde\fP
+Ställer in en utdatasubstitueringsvariabel. Se \fBdeb\-substvars\fP(5) för en
+beskrivning av utdatasubstituering.
+.TP 
+\fB\-T\fP\fIsubstvars\-fil\fP
+Read substitution variables in \fIsubstvars\-file\fP; the default is
+\fBdebian/substvars\fP.  No variable substitution is done on any of the fields
+that are output, however the special variable \fIFormat\fP will override the
+field of the same name. This option can be used multiple times to read
+substitution variables from multiple files (since dpkg 1.15.6).
+
+.TP 
+\fB\-D\fP\fIfält\fP\fB=\fP\fIvärde\fP
+Ersätt eller lägg till ett fält i den genererade control\-filen.
+.TP 
+\fB\-U\fP\fIfält\fP
+Ta bort ett fält ur den genererade control\-filen.
+.TP 
+\fB\-c\fP\fIcontrol\-fil\fP
+Anger huvudkällkodskontrollfilen som information skall läsas
+från. Standardvärdet är \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIändringsloggfil\fP
+Anger ändringsloggfilen som information skall läsas från. Standardvärdet är
+\fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIfillistfil\fP
+Läser listan över filer som skall sändas in härifrån, istället för att
+använda \fBdebian/files\fP.
+.TP 
+\fB\-F\fP\fIändringsloggformat\fP
+Anger format på ändringsloggen. Se \fBdpkg\-parsechangelog\fP(1) för information
+om alternativa format.
+.TP 
+\fB\-u\fP\fIinsändningskatalog\fP
+Se efter filer som skall sändas in i \fIinsändningskatalog\fP istället för
+\&\fB..\fP (\fBdpkg\-genchanges\fP måste kunna se dessa filer så att det kan lägga in
+deras storlekar och kontrollsummor i \fB.changes\fP\-filen).
+.TP 
+\fB\-q\fP
+\fBdpkg\-genchanges\fP kommer normalt att generera informativa meddelanden på
+standard fel, till exempel om hur många pakets källkodsfiler sänds in. \fB\-q\fP
+undertrycker dessa meddelanden.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Visar hjälpskärm och avslutar.
+.TP 
+\fB\-\-version\fP
+Visar version och avslutar.
+.
+.SH FILER
+.TP 
+\fBdebian/files\fP
+Listan över genererade filer som är en del av den insändning som
+förbereds. \fBdpkg\-genchanges\fP läser data här när \fB.changes\fP\-filen skapas.
+.SH ÖVERSÄTTNING
+Peter Krefting och Daniel Nylander.

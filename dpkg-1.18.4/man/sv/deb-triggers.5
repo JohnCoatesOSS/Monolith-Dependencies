@@ -1,0 +1,96 @@
+.\" dpkg manual page - deb-triggers(5)
+.\"
+.\" Copyright Â© 2008, 2013-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright Â© 2011, 2014 RaphaÃ«l Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-triggers 5 2014\-10\-15 Debianprojektet dpkg\-verktygen
+.SH NAMN
+deb\-triggers \- utlösare för paket
+.
+.SH SYNOPS
+utlösare
+.
+.SH BESKRIVNING
+Ett paket anger hur det förhåller sig till en eller flera utlösare genom att
+ta med en fil \fItriggers\fP i sitt styrarkiv (dvs. \fIDEBIAN/triggers\fP när
+paketet skapas).
+.PP
+Filen innehåller direktiv, ett per rad. Inledande och avslutande blanktecken
+och allt efter det första \fB#\fP på en rad kommer att klippas bort och tomma
+rader ignoreras.
+.PP
+De styrdirektiv som för närvarande stöds för utlösare är:
+.IP "" 5
+\fBinterest\fP \fIutlösarnamn\fP
+.br
+\fBinterest\-await\fP \fIutlösarnamn\fP
+.br
+\fBinterest\-noawait\fP \fIutlösarnamn\fP
+.IP
+Specifies that the package is interested in the named trigger. All triggers
+in which a package is interested must be listed using this directive in the
+triggers control file. The \(lqnoawait\(rq variant does not put the
+triggering packages in triggers\-awaited state. This should be used when the
+functionality provided by the trigger is not crucial.
+.IP
+\fBactivate\fP \fIutlösarnamn\fP
+.br
+\fBactivate\-await\fP \fIutlösarnamn\fP
+.br
+\fBactivate\-noawait\fP \fIutlösarnamn\fP
+.br
+.IP
+Arranges that changes to this package's state will activate the specified
+trigger. The trigger will be activated at the start of the following
+operations: unpack, configure, remove (including for the benefit of a
+conflicting package), purge and deconfigure.  The \(lqnoawait\(rq variant
+does not put the triggering packages in triggers\-awaited state. This should
+be used when the functionality provided by the trigger is not crucial.
+.IP
+Om paketet försvinner när ett annat paket packas upp kommer utlösaren att
+aktiveras när försvinnandet upptäcks mot slutet av uppackningen. Hantering
+av utlösare, och en övergång från "väntar på utlösare" till "installerat"
+orsakar inte aktiveringar. När det gäller uppackning kommer både utlösare
+som omnämns i gamla och nya versioner av paketet att aktiveras.
+.PP
+Okända direktiv är ett fel som förhindrar paketet från att installeras.
+.PP
+The \(lq\-noawait\(rq variants should always be favored when possible since
+triggering packages are not put in triggers\-awaited state and can thus be
+immediately configured without requiring the processing of the trigger.  If
+the triggering packages are dependencies of other upgraded packages, it will
+avoid an early trigger processing run and make it possible to run the
+trigger only once as one of the last steps of the upgrade.
+.PP
+The \(lq\-noawait\(rq variants are only supported since dpkg 1.16.1, and will
+lead to errors if used with an older dpkg. It is thus recommended to add a
+\(lqPre\-Depends: dpkg (>= 1.16.1)\(rq to any package that wish to use
+those directives.
+.PP
+The \(lq\-await\(rq alias variants are only supported since dpkg 1.17.21, and
+will lead to errors if used with an older dpkg. It is thus recommended to
+add a \(lqPre\-Depends: dpkg (>= 1.17.21)\(rq to any package that wish to
+use those directives.
+.
+.SH "SE ÄVEN"
+\fBdpkg\-trigger\fP(1), \fBdpkg\fP(1), \fB/usr/share/doc/dpkg\-dev/triggers.txt.gz\fP.
+.SH ÖVERSÄTTNING
+Peter Krefting och Daniel Nylander.

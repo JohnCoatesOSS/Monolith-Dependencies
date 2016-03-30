@@ -1,0 +1,99 @@
+.\" dpkg manual page - deb-symbols(5)
+.\"
+.\" Copyright Â© 2007-2012 RaphaÃ«l Hertzog <hertzog@debian.org>
+.\" Copyright Â© 2011, 2013-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-symbols 5 2011\-08\-14 Debianprojektet dpkg\-verktygen
+.SH NAMN
+deb\-symbols \- Debians utökade informationsfil för delade bibliotek
+.
+.SH SYNOPS
+symbols
+.
+.SH BESKRIVNING
+Formatet för posterna med utökad beroendeinformation för delade bibliotek i
+dessa filer är:
+.PP
+\fIbiblioteks\-sonamn huvudberoendemall\fP
+.br
+[ | \fIalternativ\-beroendemall\fP]
+.br
+[...]
+.br
+[* \fIfältnamn\fP: \fIfältvärde\fP]
+.br
+[ ? ]
+ \fIsymbol\fP \fIminsta\-version\fP [\fIid för beroendemall\fP]
+.P
+The \fIlibrary\-soname\fP is exactly the value of the SONAME field as exported
+by \fBobjdump\fP(1). A \fIdependency\-template\fP is a dependency where \fI#MINVER#\fP
+is dynamically replaced either by a version check like \(lq(>=
+\fIminimal\-version\fP)\(rq or by nothing (if an unversioned dependency is
+deemed sufficient).
+.P
+Each exported \fIsymbol\fP (listed as \fIname\fP@\fIversion\fP, with \fIversion\fP being
+\(lqBase\(rq if the library is not versioned) is associated to a
+\fIminimal\-version\fP of its dependency template (the main dependency template
+is always used and will end up being combined with the dependency template
+referenced by \fIid\-of\-dependency\-template\fP if present). The first
+alternative dependency template is numbered 1, the second one 2, etc.
+.P
+Alla poster i ett bibliotek kan även innehålla några fält med
+metainformation. Dessa fält lagras på rader som börjar med en asterisk. De
+enda fält som för närvarande är giltiga är:
+.TP 
+\fBBuild\-Depends\-Package\fP
+It indicates the name of the \(lq\-dev\(rq package associated to the library
+and is used by \fBdpkg\-shlibdeps\fP to make sure that the dependency generated
+is at least as strict as the corresponding build dependency (since dpkg
+1.14.13).
+.TP 
+\fBIgnore\-Blacklist\-Groups\fP
+It indicates what blacklist groups should be ignored, as a whitespace
+separated list, so that the symbols contained in those groups get included
+in the output file (since dpkg 1.17.6).  This should only be necessary for
+toolchain packages providing those blacklisted symbols. The available groups
+are system dependent, for ELF and GNU\-based systems these are \fBaeabi\fP and
+\fBgomp\fP.
+.SH EXEMPEL
+.SS "Enkla symbolfiler"
+.PP
+libftp.so.3 libftp3 #MINVER#
+ DefaultNetbuf@Base 3.1\-1\-6
+ FtpAccess@Base 3.1\-1\-6
+ [?]
+.SS "Avancerad symbols\-fil"
+.PP
+libGL.so.1 libgl1
+.br
+| libgl1\-mesa\-glx #MINVER#
+.br
+* Build\-Depends\-Package: libgl1\-mesa\-dev
+ publicGlSymbol@Base 6.3\-1
+ [?]
+ implementationSpecificSymbol@Base 6.5.2\-7 1
+ [?]
+.SH "SE ÄVEN"
+\fBhttps://wiki.debian.org/Projects/ImprovedDpkgShlibdeps\fP
+.br
+\fBdpkg\-shlibdeps\fP(1), \fBdpkg\-gensymbols\fP(1).
+.SH ÖVERSÄTTNING
+Peter Krefting och Daniel Nylander.
