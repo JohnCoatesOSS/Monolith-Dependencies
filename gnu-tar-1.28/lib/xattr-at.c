@@ -18,6 +18,11 @@
 
 #include <config.h>
 
+/* Temporarily don't build.  We are unable to build on (probably not only)
+   darwin due to lack of l*xattr callbacks (XATTR_NOFOLLOW is alternative) and
+   different function definitions. */
+#ifdef HAVE_XATTRS
+
 #include "xattr-at.h"
 #include "openat.h"
 
@@ -108,3 +113,5 @@
 #undef AT_FUNC_RESULT
 #undef AT_FUNC_POST_FILE_PARAM_DECLS
 #undef AT_FUNC_POST_FILE_ARGS
+
+#endif

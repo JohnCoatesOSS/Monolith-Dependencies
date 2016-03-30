@@ -617,7 +617,7 @@
    */
 #undef HAVE_ALLOCA_H
 
-/* define to 1 if we have <attr/xattr.h> header */
+/* Define to 1 if you have the <attr/xattr.h> header file. */
 #undef HAVE_ATTR_XATTR_H
 
 /* Define to 1 if you have the <bp-sym.h> header file. */
@@ -924,20 +924,11 @@
 /* Define to 1 if you have the <features.h> header file. */
 #undef HAVE_FEATURES_H
 
-/* Define to 1 if you have the `fgetxattr' function. */
-#undef HAVE_FGETXATTR
-
-/* Define to 1 if you have the `flistxattr' function. */
-#undef HAVE_FLISTXATTR
-
 /* Define to 1 if you have the `flockfile' function. */
 #undef HAVE_FLOCKFILE
 
 /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
 #undef HAVE_FSEEKO
-
-/* Define to 1 if you have the `fsetxattr' function. */
-#undef HAVE_FSETXATTR
 
 /* Define to 1 if you have the `fstatat' function. */
 #undef HAVE_FSTATAT
@@ -989,9 +980,6 @@
 
 /* Define to 1 if you have the `gettimeofday' function. */
 #undef HAVE_GETTIMEOFDAY
-
-/* Define to 1 if you have the `getxattr' function. */
-#undef HAVE_GETXATTR
 
 /* Define to 1 if you have the `grantpt' function. */
 #undef HAVE_GRANTPT
@@ -1045,12 +1033,6 @@
 /* Define to 1 if you have the `lchown' function. */
 #undef HAVE_LCHOWN
 
-/* Define to 1 if you have the `lgetxattr' function. */
-#undef HAVE_LGETXATTR
-
-/* Define to 1 if you have the `attr' library (-lattr). */
-#undef HAVE_LIBATTR
-
 /* Define to 1 if you have the <libgen.h> header file. */
 #undef HAVE_LIBGEN_H
 
@@ -1069,12 +1051,6 @@
 /* Define to 1 if you have the <linux/fd.h> header file. */
 #undef HAVE_LINUX_FD_H
 
-/* Define to 1 if you have the `listxattr' function. */
-#undef HAVE_LISTXATTR
-
-/* Define to 1 if you have the `llistxattr' function. */
-#undef HAVE_LLISTXATTR
-
 /* Define to 1 if you have the <locale.h> header file. */
 #undef HAVE_LOCALE_H
 
@@ -1086,9 +1062,6 @@
 
 /* Define to 1 if the system has the type 'long long int'. */
 #undef HAVE_LONG_LONG_INT
-
-/* Define to 1 if you have the `lsetxattr' function. */
-#undef HAVE_LSETXATTR
 
 /* Define to 1 if you have the `lstat' function. */
 #undef HAVE_LSTAT
@@ -1867,9 +1840,6 @@
 /* Define to 1 if you have the `setlocale' function. */
 #undef HAVE_SETLOCALE
 
-/* Define to 1 if you have the `setxattr' function. */
-#undef HAVE_SETXATTR
-
 /* Define to 1 if you have the <sgtty.h> header file. */
 #undef HAVE_SGTTY_H
 
@@ -2074,7 +2044,7 @@
 /* Define to 1 if you have the <sys/wait.h> header file. */
 #undef HAVE_SYS_WAIT_H
 
-/* define to 1 if we have <sys/xattr.h> header */
+/* Define to 1 if you have the <sys/xattr.h> header file. */
 #undef HAVE_SYS_XATTR_H
 
 /* Define if struct tm has the tm_gmtoff member. */
