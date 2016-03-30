@@ -29,7 +29,7 @@ Dir.chdir(gnuTarDirectory) do
     FileUtils.mkdir(buildDirectory)
   end
 
-  Dir.chdir(buildDirectory)
+  Dir.chdir(buildDirectory) do
     system "../configure", "--program-prefix=g"
     system "make"
   end

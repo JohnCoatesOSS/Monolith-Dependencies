@@ -470,7 +470,8 @@ tarball_pack(const char *dir, filenames_feed_func *tar_filenames_feeder,
     if (chdir(dir))
       ohshite(_("failed to chdir to '%.255s'"), dir);
 
-    execlp(TAR, "tar", "-cf", "-", "--format=gnu", "--null", "--no-unquote",
+    // use gtar instead of tar
+    execlp(TAR, "gtar", "-cf", "-", "--format=gnu", "--null", "--no-unquote",
                        "--no-recursion", "-T", "-", NULL);
     ohshite(_("unable to execute %s (%s)"), "tar -cf", TAR);
   }
