@@ -3,15 +3,17 @@
 require 'pp'
 STDOUT.sync = true
 
-# Fix for xattrs bug causing build failures on OS X:
-# https://lists.gnu.org/archive/html/bug-tar/2014-08/msg00001.html
 currentDirectory = File.dirname(__FILE__)
 gnuTarDirectory = File.join(currentDirectory, "gnu-tar-1.28")
 Dir.chdir(gnuTarDirectory) do
+
+  # Fix for xattrs bug causing build failures on OS X:
+  # https://lists.gnu.org/archive/html/bug-tar/2014-08/msg00001.html
   patchURL = "https://gist.githubusercontent.com/mistydemeo/10fbae8b8441359ba86d/raw/e5c183b72036821856f9e82b46fba6185e10e8b9/gnutar-configure-xattrs.patch"
   patchFilename = File.basename(patchURL)
   if File.exists?(patchFilename) == false
     system "curl -O #{patchURL}"
+    system "patch -g 0 -f -p1 -i ./gnutar-configure-xattrs.patch"
   end
 
     # Work around unremovable, nested dirs bug that affects lots of
